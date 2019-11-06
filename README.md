@@ -13,15 +13,17 @@ after cloning the repository go to the RealestateSpider folder (optionally creat
 Install tor-expert-bundle (https://www.torproject.org/download/tor/)
 
 1. Set up a password in command prompt:
-"C:\Tor\Tor\tor.exe --hash-password "password" | more"
+"C:\Tor\Tor\tor.exe --hash-password "password" | more" --> Copy and save the hash
 
 2. Create a torrc file (no extension) in C:\Tor\torrc
 
 3. Add the following to your torrc file
 ControlPort 9051
+
 ##If you enable the controlport, be sure to enable one of these
 ##authentication methods, to prevent attackers from accessing it.
-HashedControlPassword 16:1B8FA15192DBBFCE60A6B0022D119A2D12EC69E76E0854C43A75A9BA72
+
+HashedControlPassword 16:1B8FA15192DBBFCE60A6B0022D119A2D12EC69E76E0854C43A75A9BA72 --> Change this to password hash you got from step 1
 
 4. Run tor with 'c:\Tor\tor.exe -f "C:\Tor\torrc"'
 
