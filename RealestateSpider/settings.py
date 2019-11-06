@@ -9,17 +9,24 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+#import scrapy_fake_useragent
+
+
+#IMAGES_STORE = 's3://realscrapey-bucket/images/'
+IMAGES_STORE = 'images'
+
 BOT_NAME = 'RealestateSpider'
 
 SPIDER_MODULES = ['RealestateSpider.spiders']
 NEWSPIDER_MODULE = 'RealestateSpider.spiders'
+DEFAULT_ITEM_CLASS = 'RealestateSpider.items'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'RealestateSpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -56,6 +63,21 @@ ROBOTSTXT_OBEY = True
 #    'RealestateSpider.middlewares.RealestatespiderDownloaderMiddleware': 543,
 #}
 
+DOWNLOADER_MIDDLEWARES = {
+	## User agent
+	'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+	#need pip install scrapy_fake_useragent  (in conda)
+	'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+
+	## Proxy (privoxy + tor) 
+	#cf https://trevsewell.co.uk/scraping/anonymous-scraping-scrapy-tor-polipo/
+	# activate http proxy (turn on proxy)
+	'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+	# call the middleware to customize the http proxy  (set proxy to 'http://127.0.0.1:8118')
+    'RealestateSpider.middlewares.ProxyMiddleware': 100,
+
+}
+
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -67,6 +89,8 @@ ROBOTSTXT_OBEY = True
 #ITEM_PIPELINES = {
 #    'RealestateSpider.pipelines.RealestatespiderPipeline': 300,
 #}
+
+ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
