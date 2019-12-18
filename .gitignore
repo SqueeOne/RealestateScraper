@@ -1,0 +1,14 @@
+# Images
+*.jpg
+*.png
+
+# CSV Files
+*.csv
+
+
+#Archives
+*.rar
+
+# Images folder
+/tmp/*
+/images/*

@@ -34,26 +34,29 @@ class ProxyMiddleware(object):  #ProxyMiddleware_try_with_print(object):#
 		> long verion : 
 		the print display the IP address, to show that Tor change it 		
 		'''
-		print("\n\nProxyMiddleware: Start")		
-		site = 'http://httpbin.org/ip'
+        # Uncomment to use the long version.
+        # More verbose output, but much slower crawl. 
+
+		# print("\n\nProxyMiddleware: Start")		
+		# site = 'http://httpbin.org/ip'
 		
-		# get public IP
-		print("my normal public IP", requests.get(site).text)
+		# # get public IP
+		# print("my normal public IP", requests.get(site).text)
 		
-		# get Tor IP
-		my_ip = retrieve_ip()
-		print("IP visible through Tor(request)", my_ip.get(site).text) 
+		# # get Tor IP
+		# my_ip = retrieve_ip()
+		# print("IP visible through Tor(request)", my_ip.get(site).text) 
 
 		# change IP, retrieve it to print it
 		set_new_ip()   # ask Tor to change IP
-		my_ip = retrieve_ip()
-		print("IP visible through Tor (stem)", my_ip.get(site).text)
+		# my_ip = retrieve_ip()
+		# print("IP visible through Tor (stem)", my_ip.get(site).text)
 		
 		# get request from spider and ask it to go through a proxy (privoxy = 'http://127.0.0.1:8118'  - privoxy acts like a man-in-the-middle in the computer
 		request.meta['proxy'] = 'http://127.0.0.1:8118'
 		print("proxy used: ", request.meta['proxy'])
 		
-		print("\n\nProxyMiddleware: End")	
+		# print("\n\nProxyMiddleware: End")	
 
 
 class RealestatespiderSpiderMiddleware(object):
